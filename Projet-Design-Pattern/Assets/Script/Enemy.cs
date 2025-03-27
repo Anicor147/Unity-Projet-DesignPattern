@@ -1,6 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : PoolObject
 {
     
     void Start()
@@ -11,6 +12,11 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
+    }
+
+    override public void Reset()
+    {
+        this.gameObject.SetActive(false);
     }
     
 }

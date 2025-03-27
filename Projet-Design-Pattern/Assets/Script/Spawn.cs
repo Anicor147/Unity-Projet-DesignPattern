@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    [SerializeField] private GameObject[] prefab;
+    //[SerializeField] private GameObject[] prefab;
     [SerializeField] private Transform[] spawnPoints;
     private float timer;
     private float timerInterval = 2f;
@@ -34,7 +34,7 @@ public class Spawn : MonoBehaviour
         int RandomIndex = Random.Range(0, spawnPoints.Length);
         
         var enemy = objectPool.GetObject();
+        enemy.transform.SetPositionAndRotation(spawnPoints[RandomIndex].position, spawnPoints[RandomIndex].rotation);
         enemy.gameObject.SetActive(true);
-        enemy.transform.position = spawnPoints[RandomIndex].position;
     }
 }

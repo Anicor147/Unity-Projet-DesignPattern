@@ -16,7 +16,7 @@ public class ObjectPool : MonoBehaviour
     {
         objectPoolIndex %= objectPool.Count;
         var next = objectPool[objectPoolIndex++];
-        next.Reset();
+        // next.Reset();
         return next;
     }
 }
