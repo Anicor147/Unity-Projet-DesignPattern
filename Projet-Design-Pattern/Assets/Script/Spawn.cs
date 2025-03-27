@@ -4,13 +4,15 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     [SerializeField] private GameObject[] prefab;
-    private Enemy enemy;
+    [SerializeField] private Transform[] spawnPoints;
     private float timer;
+    private float timerInterval = 2f;
+    [SerializeField] private ObjectPool objectPool;
     
         
     void Start()
     {
-     
+        timer = timerInterval;
     }
 
     void Update()
@@ -19,12 +21,20 @@ public class Spawn : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            if (timer <= 0) SpawnEnnemies();
+            if (timer <= 0)
+            {
+                SpawnEnemies();
+                timer = timerInterval;
+            }
         }
     }
 
-    private void SpawnEnnemies()
+    private void SpawnEnemies()
     {
+        int RandomIndex = Random.Range(0, spawnPoints.Length);
         
+        var enemy = objectPool.GetObject();
+        enemy.gameObject.SetActive(true);
+        enemy.transform.position = spawnPoints[RandomIndex].position;
     }
 }
