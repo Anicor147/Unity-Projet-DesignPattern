@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    //[SerializeField] private GameObject[] prefab;
     [SerializeField] private Transform[] spawnPoints;
     private float timer;
     private float timerInterval = 2f;
     [SerializeField] private ObjectPool objectPool;
+    private static Spawn instance;
     
-        
+
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+        else Destroy(this);
+    }
+    
     void Start()
     {
         timer = timerInterval;
