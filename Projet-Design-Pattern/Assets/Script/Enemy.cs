@@ -10,7 +10,6 @@ public class Enemy : PoolObject
     private float timerInterval = 6f;
     private Collider2D col;
     [SerializeField] SpriteRenderer sr2;
-
     private void Awake()
     {
        rb = GetComponent<Rigidbody2D>(); 
@@ -44,6 +43,7 @@ public class Enemy : PoolObject
 
     override public void Reset()
     {
+        EventManager.Instance.TriggerOnEnemyDeath(1);
         Debug.Log("Should Reset");
         this.gameObject.SetActive(false);
     }
