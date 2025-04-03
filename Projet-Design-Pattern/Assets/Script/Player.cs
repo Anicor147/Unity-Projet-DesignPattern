@@ -9,10 +9,15 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && !GameManager.Instance.isShieldActive)
         {
             other.collider.isTrigger = true;
             onGameOver?.Invoke();
+        }
+        else if(GameManager.Instance.isShieldActive)
+        {
+            other.collider.isTrigger = true;
+            GameManager.Instance.isShieldActive = false;
         }
     }
 }

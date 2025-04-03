@@ -12,6 +12,15 @@ public class UserInput : MonoBehaviour
         commandInvoker = new CommandInvoker();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ICommand shieldCommand = new ShieldCommands(playerMovement);
+            commandInvoker.Execute(shieldCommand);
+        }
+    }
+
     private void FixedUpdate()
     {
         axisValue = Input.GetAxis("Horizontal");
@@ -20,12 +29,6 @@ public class UserInput : MonoBehaviour
         {
             ICommand moveCommand = new MoveCommands(playerMovement, axisValue);
             commandInvoker.Execute(moveCommand);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ICommand shieldCommand = new ShieldCommands(playerMovement);
-            commandInvoker.Execute(shieldCommand);
         }
     }
 }

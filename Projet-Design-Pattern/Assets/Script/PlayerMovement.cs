@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Experimental.Playables;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameObject shield;
+    [SerializeField] private GameObject col;
     private int shieldCharge = 2;
 
     private void Start()
@@ -34,9 +36,8 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             shield.SetActive(false);
-           
+            collision.gameObject.SetActive(false);
         }
-        GameManager.Instance.isShieldActive = false;
     }
     
 }
