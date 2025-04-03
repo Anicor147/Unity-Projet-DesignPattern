@@ -25,13 +25,18 @@ public class PlayerMovement : MonoBehaviour
             shield.SetActive(true);
             shieldCharge--;
             
-            EventManager.Instance.TriggerOnShield(shieldCharge);
+            EventManager.Instance.TriggerOnShield(1);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy")) shield.SetActive(false);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            shield.SetActive(false);
+           
+        }
+        GameManager.Instance.isShieldActive = false;
     }
     
 }

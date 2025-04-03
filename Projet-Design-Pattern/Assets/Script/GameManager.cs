@@ -1,6 +1,8 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,27 +13,33 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private EventManager eventManager;
     [SerializeField] private TMP_Text shieldChargeText;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private GameObject panelGameOver;
+    public bool isShieldActive;
     private float timer = 0;
     private int score = 0;
     private int charge = 2;
     
     
     private static GameManager _instance;
+    public static GameManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance == null)
-            _instance = this;
+        if (Instance == null)
+            Instance= this;
         else
         {
             Destroy(gameObject);
         }
+
+        Time.timeScale = 1;
     }
 
     private void Start()
     {
         victoryText.SetActive(false);
-        gameOverText.SetActive(false);
         
         EventManager.Instance.onEnemyDeath += IncreaseScore;
         EventManager.Instance.onShield += OnShieldUp;
@@ -56,7 +64,11 @@ public class GameManager : MonoBehaviour
 
     private void OnGameOver()
     {
-        gameOverText.SetActive(true);
+        if (!isShieldActive)
+        {
+            panelGameOver.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     private void IncreaseScore(int value)
@@ -74,12 +86,22 @@ public class GameManager : MonoBehaviour
     {
         charge -= value;
         shieldChargeText.text = charge.ToString();
-        Debug.Log("Shield up" + charge);
+        isShieldActive = true;
     }
 
     private void RechargeShield(int value)
     {
         charge += value;
         shieldChargeText.text = charge.ToString();
+    }
+
+    public void onQuit()
+    {
+        Application.Quit();
+    }
+
+    public void OnRestart()
+    {
+        SceneManager.LoadScene("Main");
     }
 }
