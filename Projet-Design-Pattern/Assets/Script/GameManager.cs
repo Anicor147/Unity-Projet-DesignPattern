@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private EventManager eventManager;
+    [SerializeField] private TMP_Text shieldChargeText;
     private float timer = 0;
     private int score = 0;
+    private int charge = 2;
     
     
     private static GameManager _instance;
@@ -32,9 +34,13 @@ public class GameManager : MonoBehaviour
         gameOverText.SetActive(false);
         
         EventManager.Instance.onEnemyDeath += IncreaseScore;
+        EventManager.Instance.onShield += OnShieldUp;
+        EventManager.Instance.onIncreaseShield += RechargeShield;
         
         player.onGameOver += OnGameOver;
         player.onVictory += OnVictory;
+        
+        shieldChargeText.text = charge.ToString();
     }
 
     private void Update()
@@ -62,5 +68,17 @@ public class GameManager : MonoBehaviour
     {
         player.onGameOver -= OnGameOver;
         player.onVictory -= OnVictory;
+    }
+
+    private void OnShieldUp(int value)
+    {
+        charge -= value;
+        shieldChargeText.text = charge.ToString();
+    }
+
+    private void RechargeShield(int value)
+    {
+        charge += value;
+        shieldChargeText.text = charge.ToString();
     }
 }

@@ -21,5 +21,11 @@ public class UserInput : MonoBehaviour
             ICommand moveCommand = new MoveCommands(playerMovement, axisValue);
             commandInvoker.Execute(moveCommand);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ICommand shieldCommand = new ShieldCommands(playerMovement);
+            commandInvoker.Execute(shieldCommand);
+        }
     }
 }
