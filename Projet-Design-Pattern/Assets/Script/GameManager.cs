@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         charge -= value;
         shieldChargeText.text = charge.ToString();
+        Debug.Log("Shield up" + charge);
     }
 
     private void RechargeShield(int value)
